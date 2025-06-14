@@ -1,0 +1,1 @@
+getBalanceFan(address)

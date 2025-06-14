@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Code Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            height: 80vh;
+            border: 2px solid #000;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .editor-container {
+            display: flex;
+            width: 50%;
+            background-color: #1e1e1e;
+            color: white;
+            position: relative;
+        }
+        .line-numbers {
+            padding: 10px;
+            text-align: right;
+            color: gray;
+            background-color: #2d2d2d;
+            user-select: none;
+        }
+        .code-editor {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            resize: none;
+            background-color: #1e1e1e;
+            color: white;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .output {
+            width: 50%;
+            padding: 10px;
+            background-color: #fff;
+            overflow-y: auto;
+            border-left: 2px solid #000;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="button-container">
+        <button onclick="runCode()">Run</button>
+        <button onclick="saveCode()">Save</button>
+        <button onclick="openDocumentation()">Documentation</button> <!-- New Button -->
+    </div>
+
+<div class="container">
+    <div class="editor-container">
+        <div class="line-numbers" id="lineNumbers">1</div>
+        <textarea id="editor" class="code-editor" oninput="updateLines()" onscroll="syncScroll()" onkeyup="updateLines()"></textarea>
+    </div>
+    <div class="output" id="output"></div>
+</div>
+
+<script>
+    function updateLines() {
+        const editor = document.getElementById("editor");
+        const lines = editor.value.split("\n").length;
+        const lineNumbers = document.getElementById("lineNumbers");
+
+        let lineText = "";
+        for (let i = 1; i <= lines; i++) {
+            lineText += i + "<br>";
+        }
+        lineNumbers.innerHTML = lineText;
+    }
+
+    function syncScroll() {
+        document.getElementById("lineNumbers").scrollTop = document.getElementById("editor").scrollTop;
+    }
+
+    async function runCode() {
+        const code = document.getElementById("editor").value;
+
+        // Check if the code contains `connectWallet();`
+        if (code.includes("connectWallet();")) {
+            await connectWallet();
+        } else {
+            // Send the code to the server to run/compile
+            fetch("http://localhost:3000/run", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("output").innerText = data.success 
+                    ? data.output 
+                    : "Error: " + data.error;
+            })
+            .catch(error => {
+                document.getElementById("output").innerText = "Error: Unable to connect to server";
+                console.error(error);
+            });
+        }
+    }
+
+    async function connectWallet() {
+        if (typeof window.ethereum !== "undefined") {
+            try {
+                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const address = accounts[0];
+                document.getElementById("output").innerText = `Connected: ${address}`;
+            } catch (error) {
+                document.getElementById("output").innerText = ` Error: ${error.message}`;
+            }
+        } else {
+            document.getElementById("output").innerText = " MetaMask not detected. Install it!";
+        }
+    }
+    async function saveCode() {
+        const code = document.getElementById("editor").value;
+    
+        try {
+            const response = await fetch("http://localhost:3000/compile", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code })
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+    
+            // Create a download link for the zip file
+            const blob = await response.blob();
+            const zipUrl = window.URL.createObjectURL(blob);
+    
+            const link = document.createElement("a");
+            link.href = zipUrl;
+            link.download = "compilation.zip";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+    
+            document.getElementById("output").innerText = "Code compiled and saved!";
+        } catch (error) {
+            console.error("Error:", error);
+            document.getElementById("output").innerText = "Error: Unable to save code";
+        }
+    }
+    
+    function openDocumentation() {
+        window.open("documentation.html", "_blank");
+    }
+</script>
+
+</body>
+</html>

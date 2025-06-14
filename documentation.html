@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blockchain Code Editor Documentation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2, h3 {
+      margin: 0 0 15px 0;
+    }
+    h1 {
+      color: #28a745;
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+      margin-top: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    h3 {
+      color: #555;
+    }
+    p.description {
+      margin: 5px 0 10px 0;
+      font-size: 0.95em;
+      color: #444;
+    }
+    ul.params {
+      margin: 0 0 10px 20px;
+      font-size: 0.9em;
+    }
+    ul.params li {
+      margin: 3px 0;
+    }
+    pre {
+      background-color: #1e1e1e;
+      color: #f8f8f2;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 5px 0 15px 0;
+    }
+    code {
+      font-family: Consolas, monospace;
+    }
+    .function-group {
+      margin-bottom: 30px;
+    }
+    .back-button {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .back-button a {
+      text-decoration: none;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Documentation</h1>
+
+    <!-- 1. Wallet & Contract Functions -->
+    <div class="function-group">
+      <h2>1. Wallet & Contract Functions (11)</h2>
+      
+      <h3><code>connectWallet(privateKey)</code></h3>
+      <p class="description">
+        Connects to a wallet using the provided private key.
+      </p>
+      <ul class="params">
+        <li><strong>privateKey</strong>: A secret key to sign transactions and manage wallet access.</li>
+      </ul>
+      <pre><code>connectWallet("0xYOUR_PRIVATE_KEY");</code></pre>
+      
+      <h3><code>contract(bytecode)</code></h3>
+      <p class="description">
+        Deploys a contract using the provided bytecode.
+      </p>
+      <ul class="params">
+        <li><strong>bytecode</strong>: The compiled smart contract code in hexadecimal format.</li>
+      </ul>
+      <pre><code>contract("0xYOUR_BYTECODE");</code></pre>
+      
+      <h3><code>setOwner(address)</code></h3>
+      <p class="description">
+        Sets the owner of the contract.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address to be designated as the owner.</li>
+      </ul>
+      <pre><code>setOwner("0xOwnerAddress");</code></pre>
+      
+      <h3><code>getOwner()</code></h3>
+      <p class="description">
+        Returns the currently set contract owner.
+      </p>
+      <pre><code>getOwner();</code></pre>
+      
+      <h3><code>isOwner(address)</code></h3>
+      <p class="description">
+        Checks if the provided address is the contract owner.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address to verify ownership.</li>
+      </ul>
+      <pre><code>isOwner("0xAddress");</code></pre>
+      
+      <h3><code>destroyContract()</code></h3>
+      <p class="description">
+        Destroys the contract (only executable by the owner).
+      </p>
+      <pre><code>destroyContract();</code></pre>
+      
+      <h3><code>signMessage(message)</code></h3>
+      <p class="description">
+        Signs a message using the connected wallet.
+      </p>
+      <ul class="params">
+        <li><strong>message</strong>: The text to be signed for verification purposes.</li>
+      </ul>
+      <pre><code>signMessage("Hello world");</code></pre>
+      
+      <h3><code>verifySignature(message, signature, address)</code></h3>
+      <p class="description">
+        Verifies that a message signature was created by the holder of the given address.
+      </p>
+      <ul class="params">
+        <li><strong>message</strong>: The original message.</li>
+        <li><strong>signature</strong>: The cryptographic signature of the message.</li>
+        <li><strong>address</strong>: The Ethereum address of the signer.</li>
+      </ul>
+      <pre><code>verifySignature("Hello", "0xSignature", "0xAddress");</code></pre>
+      
+      <h3><code>getNonce(address)</code></h3>
+      <p class="description">
+        Gets the transaction count (nonce) for an address.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address for which the nonce is retrieved.</li>
+      </ul>
+      <pre><code>getNonce("0xAddress");</code></pre>
+      
+      <h3><code>getContractCode(address)</code></h3>
+      <p class="description">
+        Returns the bytecode of a deployed contract.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The contract address whose bytecode is required.</li>
+      </ul>
+      <pre><code>getContractCode("0xContractAddress");</code></pre>
+      
+      <h3><code>getBlockTimestamp(blockNumber)</code></h3>
+      <p class="description">
+        Gets the timestamp for a specific block.
+      </p>
+      <ul class="params">
+        <li><strong>blockNumber</strong>: The number of the block for which to retrieve the timestamp.</li>
+      </ul>
+      <pre><code>getBlockTimestamp(123456);</code></pre>
+    </div>
+
+    <!-- 2. Token Functions -->
+    <div class="function-group">
+      <h2>2. Token Functions (10)</h2>
+      
+      <h3><code>mintTokens(address, amount)</code></h3>
+      <p class="description">
+        Mints tokens to a specified address.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address to receive the minted tokens.</li>
+        <li><strong>amount</strong>: The number of tokens to mint.</li>
+      </ul>
+      <pre><code>mintTokens("0xAddress", 1000);</code></pre>
+      
+      <h3><code>transferTokens(from, to, amount)</code></h3>
+      <p class="description">
+        Transfers tokens from one address to another.
+      </p>
+      <ul class="params">
+        <li><strong>from</strong>: The sender’s Ethereum address.</li>
+        <li><strong>to</strong>: The recipient’s Ethereum address.</li>
+        <li><strong>amount</strong>: The number of tokens to transfer.</li>
+      </ul>
+      <pre><code>transferTokens("0xFrom", "0xTo", 500);</code></pre>
+      
+      <h3><code>burnTokens(address, amount)</code></h3>
+      <p class="description">
+        Burns a specific amount of tokens from an address.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address from which tokens will be burned.</li>
+        <li><strong>amount</strong>: The number of tokens to burn.</li>
+      </ul>
+      <pre><code>burnTokens("0xAddress", 200);</code></pre>
+      
+      <h3><code>balanceOf(address)</code></h3>
+      <p class="description">
+        Retrieves the token balance for a given address.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address to check for tokens.</li>
+      </ul>
+      <pre><code>balanceOf("0xAddress");</code></pre>
+      
+      <h3><code>getTokenBalance(tokenAddress, address)</code></h3>
+      <p class="description">
+        Retrieves the balance of an ERC20 token for a given address.
+      </p>
+      <ul class="params">
+        <li><strong>tokenAddress</strong>: The ERC20 token's contract address.</li>
+        <li><strong>address</strong>: The address for which the token balance is checked.</li>
+      </ul>
+      <pre><code>getTokenBalance("0xToken", "0xAddress");</code></pre>
+      
+      <h3><code>approve(owner, spender, amount)</code></h3>
+      <p class="description">
+        Approves a spender to transfer tokens on behalf of the owner.
+      </p>
+      <ul class="params">
+        <li><strong>owner</strong>: The Ethereum address that owns the tokens.</li>
+        <li><strong>spender</strong>: The address that is allowed to spend the tokens.</li>
+        <li><strong>amount</strong>: The maximum number of tokens that can be spent.</li>
+      </ul>
+      <pre><code>approve("0xOwner", "0xSpender", 100);</code></pre>
+      
+      <h3><code>transferFrom(spender, from, to, amount)</code></h3>
+      <p class="description">
+        Transfers tokens from one address to another on behalf of the token owner.
+      </p>
+      <ul class="params">
+        <li><strong>spender</strong>: The address executing the transfer.</li>
+        <li><strong>from</strong>: The address from which tokens are drawn.</li>
+        <li><strong>to</strong>: The recipient’s address.</li>
+        <li><strong>amount</strong>: The number of tokens to transfer.</li>
+      </ul>
+      <pre><code>transferFrom("0xSpender", "0xFrom", "0xTo", 50);</code></pre>
+      
+      <h3><code>getAllowance(owner, spender)</code></h3>
+      <p class="description">
+        Retrieves the remaining number of tokens that the spender is allowed to transfer on behalf of the owner.
+      </p>
+      <ul class="params">
+        <li><strong>owner</strong>: The token owner's address.</li>
+        <li><strong>spender</strong>: The address allowed to spend the tokens.</li>
+      </ul>
+      <pre><code>getAllowance("0xOwner", "0xSpender");</code></pre>
+      
+      <h3><code>getTokenDecimals(tokenAddress)</code></h3>
+      <p class="description">
+        Retrieves the number of decimals used by an ERC20 token.
+      </p>
+      <ul class="params">
+        <li><strong>tokenAddress</strong>: The ERC20 token's contract address.</li>
+      </ul>
+      <pre><code>getTokenDecimals("0xToken");</code></pre>
+      
+      <h3><code>getTokenSymbol(tokenAddress)</code></h3>
+      <p class="description">
+        Retrieves the symbol of an ERC20 token.
+      </p>
+      <ul class="params">
+        <li><strong>tokenAddress</strong>: The ERC20 token's contract address.</li>
+      </ul>
+      <pre><code>getTokenSymbol("0xToken");</code></pre>
+    </div>
+
+    <!-- 3. Blockchain Data Functions -->
+    <div class="function-group">
+      <h2>3. Blockchain Data Functions (14)</h2>
+      
+      <h3><code>getBalance(address)</code></h3>
+      <p class="description">
+        Retrieves the ETH balance of an address.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address to query.</li>
+      </ul>
+      <pre><code>getBalance("0xAddress");</code></pre>
+      
+      <h3><code>getGasPrice()</code></h3>
+      <p class="description">
+        Retrieves the current gas price from the network.
+      </p>
+      <pre><code>getGasPrice();</code></pre>
+      
+      <h3><code>getBlockNumber()</code></h3>
+      <p class="description">
+        Retrieves the current block number.
+      </p>
+      <pre><code>getBlockNumber();</code></pre>
+      
+      <h3><code>getTransactionCount(address)</code></h3>
+      <p class="description">
+        Retrieves the transaction count (nonce) for an address.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address to query.</li>
+      </ul>
+      <pre><code>getTransactionCount("0xAddress");</code></pre>
+      
+      <h3><code>getChainId()</code></h3>
+      <p class="description">
+        Retrieves the current blockchain network's chain ID.
+      </p>
+      <pre><code>getChainId();</code></pre>
+      
+      <h3><code>getNetworkName()</code></h3>
+      <p class="description">
+        Retrieves the name of the current network.
+      </p>
+      <pre><code>getNetworkName();</code></pre>
+      
+      <h3><code>getBalanceFan(address)</code></h3>
+      <p class="description">
+        Retrieves the balance of an address across multiple networks.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address to query.</li>
+      </ul>
+      <pre><code>getBalanceFan("0xAddress");</code></pre>
+      
+      <h3><code>getLatestBlock()</code></h3>
+      <p class="description">
+        Retrieves information about the latest block.
+      </p>
+      <pre><code>getLatestBlock();</code></pre>
+      
+      <h3><code>getStorageAt(address, position)</code></h3>
+      <p class="description">
+        Reads the storage data of a contract at a specific position.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The contract address to query.</li>
+        <li><strong>position</strong>: The storage position/index.</li>
+      </ul>
+      <pre><code>getStorageAt("0xContract", 0);</code></pre>
+      
+      <h3><code>getBlock(blockNumber)</code></h3>
+      <p class="description">
+        Retrieves details for a specific block.
+      </p>
+      <ul class="params">
+        <li><strong>blockNumber</strong>: The block number to query.</li>
+      </ul>
+      <pre><code>getBlock(123456);</code></pre>
+      
+      <h3><code>getTransactionReceipt(txHash)</code></h3>
+      <p class="description">
+        Retrieves the receipt of a specific transaction.
+      </p>
+      <ul class="params">
+        <li><strong>txHash</strong>: The hash of the transaction to retrieve.</li>
+      </ul>
+      <pre><code>getTransactionReceipt("0xTxHash");</code></pre>
+      
+      <h3><code>getLogs(address, topics)</code></h3>
+      <p class="description">
+        Retrieves event logs from a contract.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The contract address to query.</li>
+        <li><strong>topics</strong>: An array of log topics to filter the events.</li>
+      </ul>
+      <pre><code>getLogs("0xContract", '["0xTopic"]');</code></pre>
+      
+      <h3><code>getTransactionByHash(txHash)</code></h3>
+      <p class="description">
+        Retrieves details of a transaction using its hash.
+      </p>
+      <ul class="params">
+        <li><strong>txHash</strong>: The transaction hash to look up.</li>
+      </ul>
+      <pre><code>getTransactionByHash("0xTxHash");</code></pre>
+      
+      <h3><code>getTokenTotalSupply(tokenAddress)</code></h3>
+      <p class="description">
+        Retrieves the total supply of an ERC20 token.
+      </p>
+      <ul class="params">
+        <li><strong>tokenAddress</strong>: The ERC20 token's contract address.</li>
+      </ul>
+      <pre><code>getTokenTotalSupply("0xToken");</code></pre>
+    </div>
+
+    <!-- 4. Transaction Functions -->
+    <div class="function-group">
+      <h2>4. Transaction Functions (6)</h2>
+      
+      <h3><code>sendETH(network, to, amount)</code></h3>
+      <p class="description">
+        Sends ETH to a specified address on a given network.
+      </p>
+      <ul class="params">
+        <li><strong>network</strong>: The blockchain network to use (e.g., "linea-sepolia").</li>
+        <li><strong>to</strong>: The recipient's Ethereum address.</li>
+        <li><strong>amount</strong>: The amount of ETH to send.</li>
+      </ul>
+      <pre><code>sendETH("linea-sepolia", "0xTo", "0.1");</code></pre>
+      
+      <h3><code>sendToken(tokenAddress, to, amount)</code></h3>
+      <p class="description">
+        Sends ERC20 tokens to a specified address.
+      </p>
+      <ul class="params">
+        <li><strong>tokenAddress</strong>: The ERC20 token's contract address.</li>
+        <li><strong>to</strong>: The recipient's Ethereum address.</li>
+        <li><strong>amount</strong>: The amount of tokens to send.</li>
+      </ul>
+      <pre><code>sendToken("0xToken", "0xTo", "10");</code></pre>
+      
+      <h3><code>getTransactionStatus(txHash)</code></h3>
+      <p class="description">
+        Retrieves the status of a specific transaction.
+      </p>
+      <ul class="params">
+        <li><strong>txHash</strong>: The transaction hash to check.</li>
+      </ul>
+      <pre><code>getTransactionStatus("0xTxHash");</code></pre>
+      
+      <h3><code>estimateGas(to, amount)</code></h3>
+      <p class="description">
+        Estimates the gas required for a transaction.
+      </p>
+      <ul class="params">
+        <li><strong>to</strong>: The recipient’s address.</li>
+        <li><strong>amount</strong>: The amount of ETH to be sent (used for estimation).</li>
+      </ul>
+      <pre><code>estimateGas("0xTo", "0.1");</code></pre>
+      
+      <h3><code>getGasUsed(blockNumber)</code></h3>
+      <p class="description">
+        Retrieves the total gas used in a specific block.
+      </p>
+      <ul class="params">
+        <li><strong>blockNumber</strong>: The block number to query.</li>
+      </ul>
+      <pre><code>getGasUsed(123456);</code></pre>
+      
+      <h3><code>getPendingTransactions()</code></h3>
+      <p class="description">
+        Retrieves the count of pending transactions in the network.
+      </p>
+      <pre><code>getPendingTransactions();</code></pre>
+    </div>
+
+    <!-- 5. Network Functions -->
+    <div class="function-group">
+      <h2>5. Network Functions (7)</h2>
+      
+      <h3><code>getNetworkLatency()</code></h3>
+      <p class="description">
+        Measures and returns the network latency.
+      </p>
+      <pre><code>getNetworkLatency();</code></pre>
+      
+      <h3><code>getCurrentDifficulty()</code></h3>
+      <p class="description">
+        Retrieves the current mining difficulty.
+      </p>
+      <pre><code>getCurrentDifficulty();</code></pre>
+      
+      <h3><code>getUncleCount(blockNumber)</code></h3>
+      <p class="description">
+        Retrieves the count of uncle blocks for a specified block.
+      </p>
+      <ul class="params">
+        <li><strong>blockNumber</strong>: The block number to query.</li>
+      </ul>
+      <pre><code>getUncleCount(123456);</code></pre>
+      
+      <h3><code>getGasLimit()</code></h3>
+      <p class="description">
+        Retrieves the current gas limit of the network.
+      </p>
+      <pre><code>getGasLimit();</code></pre>
+      
+      <h3><code>getPeers()</code></h3>
+      <p class="description">
+        Retrieves the count of connected peers.
+      </p>
+      <pre><code>getPeers();</code></pre>
+      
+      <h3><code>getHashRate()</code></h3>
+      <p class="description">
+        Retrieves the current network hash rate.
+      </p>
+      <pre><code>getHashRate();</code></pre>
+    </div>
+
+    <!-- 6. Utility Functions -->
+    <div class="function-group">
+      <h2>6. Utility Functions (3)</h2>
+      
+      <h3><code>isValidAddress(address)</code></h3>
+      <p class="description">
+        Validates whether the given string is a proper Ethereum address.
+      </p>
+      <ul class="params">
+        <li><strong>address</strong>: The Ethereum address to validate.</li>
+      </ul>
+      <pre><code>isValidAddress("0xAddress");</code></pre>
+      
+      <h3><code>ethToWei(amount)</code></h3>
+      <p class="description">
+        Converts an amount from ETH to WEI.
+      </p>
+      <ul class="params">
+        <li><strong>amount</strong>: The amount in ETH.</li>
+      </ul>
+      <pre><code>ethToWei(1);</code></pre>
+      
+      <h3><code>weiToEth(amount)</code></h3>
+      <p class="description">
+        Converts an amount from WEI to ETH.
+      </p>
+      <ul class="params">
+        <li><strong>amount</strong>: The amount in WEI.</li>
+      </ul>
+      <pre><code>weiToEth(1000000000000000000);</code></pre>
+    </div>
+
+    <div class="back-button">
+      <a href="front.html">Back to Editor</a>
+    </div>
+  </div>
+</body>
+</html>
