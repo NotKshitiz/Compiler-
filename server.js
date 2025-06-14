@@ -885,4 +885,7 @@ app.post('/compile', async (req, res) => {
     }
 });
 const PORT = 3000;
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'front.html'));
+});
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
