@@ -4,7 +4,7 @@ pipeline{
     stages{
         stage('Clone'){
             steps{
-               git branch: 'master', url: 'https://github.com/NotKshitiz/Compiler-.git'
+               git branch: 'main', url: 'https://github.com/NotKshitiz/Compiler-.git'
             }
         }
 
