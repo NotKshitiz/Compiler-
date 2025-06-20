@@ -114,7 +114,7 @@
             await connectWallet();
         } else {
             // Send the code to the server to run/compile
-            fetch("http://localhost:3000/run", {
+            fetch("/run", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code })
@@ -149,7 +149,7 @@
         const code = document.getElementById("editor").value;
     
         try {
-            const response = await fetch("http://localhost:3000/compile", {
+            const response = await fetch("/compile", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code })
