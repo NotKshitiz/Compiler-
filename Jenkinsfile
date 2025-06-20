@@ -22,7 +22,7 @@ pipeline{
 
         stage('Run Compiler'){
             steps{
-                sh 'docker run blockchain-compiler'
+                sh 'docker run -d -p 3000:3000 --name compiler-run blockchain-compiler'
             }
         }
     }
